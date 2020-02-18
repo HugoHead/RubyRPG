@@ -11,23 +11,44 @@ def select (options)
 	isInt = false
 
 	i.times do |m|
-		if resposnse.to_i == i
+		if resposnse.to_i == 0
+			break
+		end
+		if resposnse.to_i == m
 			isInt = true
 			break
 		end
 	end
 
-	puts (isInt)
+	puts "\n"
 
 	if isInt
-		return options[resposnse]
+		return options[resposnse.to_i - 1]
 	else
 		return select(options)
 	end
 end
 
+class Mage
+	def initailize
+		puts "You are now a mage. What would you like to do?"
+	end
+end
+
+class Rouge
+	def initialize
+		puts "You are now a rouge. "
+	end
+end
+
+class Brute
+	def initialize
+		puts "You are now a brute."
+	end
+end
+
 class Player
-	attr_accessor :archi, :name,	
+	attr_accessor :archi, :name, :classAttrs	
 
 	def determineArchi
 		return select(["rouge", "mage", "brute"])
@@ -39,13 +60,17 @@ class Player
 		name = gets.chomp("\n")
 		self.name = name
 		puts "Hello #{self.name}."
-
-		self.archi = determineArchi
-
-		puts self.archi
 	end
 end
 
 $user = Player.new
 
-puts select(["rouge", "mage", "brute"])
+$user.archi = select(["rouge", "mage", "brute"])
+
+if $user.archi == "mage"
+	classAttrs = Mage.new
+elsif $user.archi == "rouge"
+	classAttrs = Rouge.new
+elsif $user.archi == "brute"
+	classAttrs = Brute.new
+end
