@@ -30,20 +30,22 @@ def select (options)
 end
 
 class Mage
+	attr_accessor :availableAttacks = ["run", "cast"]
 	def initailize
 		puts "You are now a mage. What would you like to do?"
 	end
 end
 
 class Rouge
+	
 	def initialize
-		puts "You are now a rouge. "
+		puts "You are now a rouge.  What would you like to do?"
 	end
 end
 
 class Brute
 	def initialize
-		puts "You are now a brute."
+		puts "You are now a brute.  What would you like to do?"
 	end
 end
 
@@ -74,3 +76,23 @@ elsif $user.archi == "rouge"
 elsif $user.archi == "brute"
 	classAttrs = Brute.new
 end
+
+puts "You approach a rival."
+
+select($user.classAttrs.availableAttacks)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
