@@ -1,7 +1,11 @@
-def select (options)
+require 'colorize'
+
+def select (name, options)
+	puts "\n#{name}".blue
+
 	i = 1
 	options.each do |n|
-		puts i.to_s + ") " + n
+		puts (i.to_s + ") " + n).green
 		i += 1
 	end
 	puts "\n"
@@ -25,13 +29,14 @@ def select (options)
 	if isInt
 		return options[resposnse.to_i - 1]
 	else
-		return select(options)
+		return select(name, options)
 	end
 end
 
 class Mage
-	attr_accessor :availableAttacks = ["run", "cast"]
+	attr_accessor :availableAttacks, :nAme
 	def initailize
+		self.availableAttacks = ["run", "cast"]
 		puts "You are now a mage. What would you like to do?"
 	end
 end
@@ -53,21 +58,21 @@ class Player
 	attr_accessor :archi, :name, :classAttrs	
 
 	def determineArchi
-		return select(["rouge", "mage", "brute"])
+		return select("pick a class", ["rouge", "mage", "brute"])
 	end
 
 	def initialize
-		puts "Welcome to a text adventure!"
-		puts "What is your name?"
+		puts "Welcome to a text adventure!".green
+		puts "What is your name?".green
 		name = gets.chomp("\n")
 		self.name = name
-		puts "Hello #{self.name}."
+		puts "Hello #{self.name}.".green
 	end
 end
 
 $user = Player.new
 
-$user.archi = select(["rouge", "mage", "brute"])
+$user.archi = select("Pick a class", ["rouge", "mage", "brute"])
 
 if $user.archi == "mage"
 	classAttrs = Mage.new
@@ -77,22 +82,8 @@ elsif $user.archi == "brute"
 	classAttrs = Brute.new
 end
 
-puts "You approach a rival."
+puts "You approach a rival.".green
 
-select($user.classAttrs.availableAttacks)
+puts $user.classAttrs.nAme
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+select("Pick an option", $user.classAttrs.availableAttacks)
