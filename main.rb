@@ -1,5 +1,19 @@
 require 'colorize'
 
+def handle(option)
+	if option == "run"
+
+	elsif option == "punch"
+
+	elsif option == "cast"
+
+	elsif option == "sneak"
+
+	elsif option == "lift"
+	
+	end	
+end
+
 def select (name, options)
 	puts "\n#{name}".blue
 
@@ -53,17 +67,21 @@ $user = Player.new
 
 $user.archi = select("Pick a class", ["rouge", "mage", "brute"])
 
-=begin
 if $user.archi == "mage"
-	classAttrs = Mage.new
+	$user.availableAttacks.push("cast")
 elsif $user.archi == "rouge"
-	classAttrs = Rouge.new
+	$user.availableAttacks.push("sneak")
 elsif $user.archi == "brute"
-	classAttrs = Brute.new
+	$user.availableAttacks.push("lift")
 end
-=end
+
 puts "You approach a rival.".green
 
 puts $user.availableAttacks
 
-select("Pick an option", $user.availableAttacks)
+gameRunning = true
+
+while gameRunning == true
+	option = select("Pick an option", $user.availableAttacks)
+	handle(option)
+end
