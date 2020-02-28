@@ -33,35 +33,14 @@ def select (name, options)
 	end
 end
 
-class Mage
-	attr_accessor :availableAttacks, :nAme
-	def initailize
-		self.availableAttacks = ["run", "cast"]
-		puts "You are now a mage. What would you like to do?"
-	end
-end
-
-class Rouge
-	
-	def initialize
-		puts "You are now a rouge.  What would you like to do?"
-	end
-end
-
-class Brute
-	def initialize
-		puts "You are now a brute.  What would you like to do?"
-	end
-end
-
 class Player
-	attr_accessor :archi, :name, :classAttrs	
-
+	attr_accessor :archi, :name, :classAttrs, :availableAttacks
 	def determineArchi
 		return select("pick a class", ["rouge", "mage", "brute"])
 	end
 
 	def initialize
+		self.availableAttacks  = ["run", "punch"]	
 		puts "Welcome to a text adventure!".green
 		puts "What is your name?".green
 		name = gets.chomp("\n")
@@ -74,6 +53,7 @@ $user = Player.new
 
 $user.archi = select("Pick a class", ["rouge", "mage", "brute"])
 
+=begin
 if $user.archi == "mage"
 	classAttrs = Mage.new
 elsif $user.archi == "rouge"
@@ -81,9 +61,9 @@ elsif $user.archi == "rouge"
 elsif $user.archi == "brute"
 	classAttrs = Brute.new
 end
-
+=end
 puts "You approach a rival.".green
 
-puts $user.classAttrs.nAme
+puts $user.availableAttacks
 
-select("Pick an option", $user.classAttrs.availableAttacks)
+select("Pick an option", $user.availableAttacks)
