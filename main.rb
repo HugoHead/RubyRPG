@@ -1,8 +1,13 @@
 require 'colorize'
 
+def pause
+	print("press enter to coninue")
+	gets
+end
+
 def handle(option)
 	if option == "run"
-		puts "You run from #{$amnimateEnemyName}."
+		puts "You run from #{$currentEnemy.amnimateEnemyName} and away from #{$currentEnemy.location}."
 	elsif option == "punch"
 
 	elsif option == "cast"
@@ -50,12 +55,14 @@ def select (name, options)
 end
 
 class Chalange
-	attr_accessor :nAme, :amnimateEnemyName, :chalangeLevel, :description
-	def initialize (nAme, amnimateEnemyName, chalangeLevel, description)
+	attr_accessor :nAme, :amnimateEnemyName, :location, :chalangeLevel, :description
+	def initialize (nAme, amnimateEnemyName, chalangeLevel, location, description)
 		self.nAme = nAme
 		self.amnimateEnemyName = amnimateEnemyName
 		self.chalangeLevel = chalangeLevel
+		self.location = location
 		self.description = description
+	end
 end
 
 class Player
@@ -86,11 +93,13 @@ elsif $user.archi == "brute"
 	$user.availableOptions.push("lift")
 end
 
-$currentEnemy = Chalange.new ("rival", "your rival", "1", "You enter a cave. The cave contians a rival member of your class.")
+$currentEnemy = Chalange.new "rival", "your rival", "1", "the cave", "You enter a cave. The cave contians a rival member of your class."
 
 gameRunning = true
 
 while gameRunning == true
+	pause
 	option = select("Pick an option", $user.availableOptions)
+	pause
 	handle(option)
 end
