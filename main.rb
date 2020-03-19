@@ -1,28 +1,55 @@
 require 'colorize'
 
 def pause
-	print("press enter to coninue")
+	print("press enter to coninue".cyan)
 	gets
+end
+
+def run 
+	if $user.currentLevel == 0
+		puts "You turn to run. As you turn you see a massive brick wall that has been summond by the rival. You turn back to see him grinning."
+	end
+end
+
+def punch
+
+end 
+
+def cast
+
+end
+
+def sneak
+	arr = ["to", "away"]
+	select "Sneak toards or away from the situation?"
+end
+
+def lift
+
+end
+
+def persuade
+
 end
 
 def handle(option)
 	if option == "run"
-		puts "You run from #{$currentEnemy.amnimateEnemyName} and away from #{$currentEnemy.location}."
+		run
 	elsif option == "punch"
-
+		punch
 	elsif option == "cast"
-
+		cast
 	elsif option == "sneak"
-
+		sneak
 	elsif option == "lift"
-	
+		lift
 	elsif option == "persuade"
-
+		persuade
 	end	
 end
 
 def select (name, options)
-	puts "\n#{name}".blue
+	puts "\n#{name}".green
 
 	i = 1
 	options.each do |n|
@@ -54,6 +81,21 @@ def select (name, options)
 	end
 end
 
+def changeLevel (amm)
+	level = $user.currentLevel
+	level += amm
+
+				     #name,          threatname,      chalangeLevel,      locationName,      description
+	levelZero = 	
+		Chalange.new "rival enemy",  "rival",         1,                  "caveEntrance",      "You see a cave. The cave contians a rival of yours."
+
+	levels = [
+		levelZero
+	]
+	$user.currentLevel += amm
+	return levels[level]
+end
+
 class Chalange
 	attr_accessor :nAme, :amnimateEnemyName, :location, :chalangeLevel, :description
 	def initialize (nAme, amnimateEnemyName, chalangeLevel, location, description)
@@ -66,38 +108,28 @@ class Chalange
 end
 
 class Player
-	attr_accessor :archi, :name, :classAttrs, :availableOptions
-	def determineArchi
-		return select("pick a class", ["rouge", "mage", "brute"])
-	end
+	attr_accessor :archi, :name, :classAttrs, :availableOptions, :energy, :currentLevel
 
 	def initialize
-		self.availableOptions  = ["run", "punch", "persuade"]	
+		self.energy = 100
+		self.currentLevel = 0
+		self.availableOptions  = ["run", "punch", "persuade", "cast"]	
 		puts "Welcome to a text adventure!".green
 		puts "What is your name?".green
 		name = gets.chomp("\n")
 		self.name = name
-		puts "Hello #{self.name}.".green
+		puts "Hello #{self.name}.\n".green
 	end
 end
 
 $user = Player.new
 
-$user.archi = select("Pick a class", ["rouge", "mage", "brute"])
-
-if $user.archi == "mage"
-	$user.availableOptions.push("cast")
-elsif $user.archi == "rouge"
-	$user.availableOptions.push("sneak")
-elsif $user.archi == "brute"
-	$user.availableOptions.push("lift")
-end
-
-$currentEnemy = Chalange.new "rival", "your rival", "1", "the cave", "You enter a cave. The cave contians a rival member of your class."
+$chalange = changeLevel(0)
 
 gameRunning = true
 
 while gameRunning == true
+	puts $chalange.description.green
 	pause
 	option = select("Pick an option", $user.availableOptions)
 	pause
